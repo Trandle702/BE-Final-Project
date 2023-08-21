@@ -44,6 +44,12 @@ public class GlobalControllerErrorHandler {
 	public ExceptionMessage handleDuplicateKeyException (DuplicateKeyException ex, WebRequest webRequest) {
 		return buildExceptionMessage(ex, HttpStatus.CONFLICT, webRequest, LogStatus.MESSAGE_ONLY);
 	}
+	
+	@ExceptionHandler(UnsupportedOperationException.class)
+	@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
+	public ExceptionMessage handleUnsupportedOperationException (UnsupportedOperationException ex, WebRequest webRequest) {
+		return buildExceptionMessage(ex, HttpStatus.METHOD_NOT_ALLOWED, webRequest, LogStatus.MESSAGE_ONLY);
+	}
 
 	private ExceptionMessage buildExceptionMessage(Exception ex, HttpStatus status, WebRequest webRequest,
 			LogStatus logStatus) {

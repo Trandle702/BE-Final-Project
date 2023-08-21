@@ -1,5 +1,7 @@
 package light.novel.logger.service;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -45,23 +47,29 @@ public class LightNovelLoggerService {
 				.orElseThrow(() -> new NoSuchElementException(
 						"User with ID=" + userId + " does not exists."));
 	}
-//
-//	@Transactional(readOnly = true)
-//	public List<UserData> retrieveAllUsers() {
-//		List<User> users = userDao.findAll();
-//		List<UserData> response = new LinkedList<>();
-//		
-//		for(User user: users) {
-//			response.add(new UserData(user));
-//		}
-//		
-//		return response;
-//	}
-//
+
+	@Transactional(readOnly = true)
+	public List<UserData> retrieveAllUsers() {
+		List<User> users = userDao.findAll();
+		List<UserData> response = new LinkedList<>();
+		
+		for(User user: users) {
+			response.add(new UserData(user));
+		}
+		
+		return response;
+	}
+
 	@Transactional(readOnly = true)
 	public UserData retrieveUserById(Long userId) {
 		User user = findUserById(userId);
 		return new UserData(user);
+	}
+
+	@Transactional(readOnly = false)
+	public void deleteUserById(Long userId) {
+		User user = findUserById(userId);
+		userDao.delete(user);
 	}
 
 }
