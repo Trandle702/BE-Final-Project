@@ -1,0 +1,14 @@
+spring:
+   datasource:
+      username: light_novel_logger
+      password: light_novel_logger
+      url: jdbc:mysql://localhost:3306/light_novel_logger
+      
+   jpa:
+      hibernate:
+         ddl-auto: none
+      show-sql: true
+   
+   sql:
+      init:
+         mode: never
