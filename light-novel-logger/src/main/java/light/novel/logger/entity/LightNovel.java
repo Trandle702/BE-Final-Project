@@ -17,7 +17,7 @@ public class LightNovel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long novelId;
+	private Long lightNovelId;
 	
 	private int volumeNumber;
 	private int pageCount;
@@ -26,6 +26,6 @@ public class LightNovel {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "volumes", nullable = false)
+	@JoinColumn(name = "series_id", nullable = false)
 	private Series series;
 }

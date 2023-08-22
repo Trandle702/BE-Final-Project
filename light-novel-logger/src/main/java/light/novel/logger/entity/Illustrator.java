@@ -1,5 +1,6 @@
 package light.novel.logger.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -19,6 +20,7 @@ public class Illustrator {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long illustratorId;
+	
 	private String firstName;
 	private String lastName;
 	
@@ -27,5 +29,5 @@ public class Illustrator {
 	@OneToMany(mappedBy = "illustrator",
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
-	private Set<Series> series;
+	private Set<Series> series = new HashSet<>();
 }

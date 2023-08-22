@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import light.novel.logger.controller.model.UserData;
+import light.novel.logger.controller.model.UserData.AuthorData;
 import light.novel.logger.service.LightNovelLoggerService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,10 @@ public class LightNovelLoggerController {
 	
 	@Autowired
 	private LightNovelLoggerService lightNovelLoggerService;
+	
+	/*
+	 * CRUD operations for the User Class - Create, Read, Update, Delete 
+	 */
 	
 	@PostMapping("/user")
 	@ResponseStatus(code = HttpStatus.CREATED)
@@ -66,4 +71,20 @@ public class LightNovelLoggerController {
 		return Map.of("message:", "Deletion of User with ID=" + userId + " was successful.");
 	}
 	
+	/*
+	 * Crud operations for the Author class - Create, Read, Update
+	 */
+	
+	@PostMapping("/author")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public AuthorData insertAuthor(@RequestBody AuthorData authorData) {
+		log.info("Creating new author {}", authorData);
+		return lightNovelLoggerService.saveAuthor(authorData);
+	}
+	
+	@GetMapping("/author")
+	public List<AuthorData> retrieveAllAuthors(){
+		log.info("Retrieving all authors.");
+		return lightNovelLoggerService.retrieveAllAuthors();
+	}
 }

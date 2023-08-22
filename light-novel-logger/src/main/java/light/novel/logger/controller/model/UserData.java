@@ -24,10 +24,10 @@ public class UserData {
 	private Set<SeriesData> series = new HashSet<>();
 	
 	public UserData(User user) {
-		userId = user.getUserId();
-		firstName = user.getFirstName();
-		lastName = user.getLastName();
-		email = user.getEmail();
+		this.userId = user.getUserId();
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
+		this.email = user.getEmail();
 		
 		for(Series series : user.getSeries()) {
 			this.series.add(new SeriesData(series));
@@ -58,15 +58,15 @@ public class UserData {
 		private Set<CategoryData> categories = new HashSet<>();
 		
 		public SeriesData(Series series) {
-			seriesId = series.getSeriesId();
-			seriesName = series.getSeriesName();
+			this.seriesId = series.getSeriesId();
+			this.seriesName = series.getSeriesName();
 			
 			for(LightNovel volume : series.getVolumes()) {
-				volumes.add(new LightNovelData(volume));
+				this.volumes.add(new LightNovelData(volume));
 			}
 			
 			for(Category category: series.getCategories()) {
-				categories.add(new CategoryData(category));
+				this.categories.add(new CategoryData(category));
 			}
 		}
 
@@ -91,22 +91,22 @@ public class UserData {
 	@Data
 	@NoArgsConstructor
 	public static class LightNovelData{
-		private Long novelId;
+		private Long lightNovelId;
 		private int volumeNumber;
 		private int pageCount;
 		private String description;
 		
 		public LightNovelData(LightNovel lightNovel) {
-			novelId = lightNovel.getNovelId();
-			volumeNumber = lightNovel.getVolumeNumber();
-			pageCount = lightNovel.getPageCount();
-			description = lightNovel.getDescription();
+			this.lightNovelId = lightNovel.getLightNovelId();
+			this.volumeNumber = lightNovel.getVolumeNumber();
+			this.pageCount = lightNovel.getPageCount();
+			this.description = lightNovel.getDescription();
 		}
 
 		public LightNovel toLightNovel() {
 			LightNovel lightNovel = new LightNovel();
 			
-			lightNovel.setNovelId(novelId);
+			lightNovel.setLightNovelId(lightNovelId);
 			lightNovel.setVolumeNumber(volumeNumber);
 			lightNovel.setPageCount(pageCount);
 			lightNovel.setDescription(description);
@@ -122,8 +122,8 @@ public class UserData {
 		private String categoryName;
 		
 		public CategoryData(Category category) {
-			categoryId = category.getCategoryId();
-			categoryName = category.getCategoryName();
+			this.categoryId = category.getCategoryId();
+			this.categoryName = category.getCategoryName();
 		}
 
 		public Category toCategory() {
@@ -178,7 +178,7 @@ public class UserData {
 		private Set<SeriesData> series = new HashSet<>();
 		
 		public IllustratorData(Illustrator illustrator) {
-			illustratorId = illustrator.getIllustratorId();
+			this.illustratorId = illustrator.getIllustratorId();
 			this.firstName = illustrator.getFirstName();
 			this.lastName = illustrator.getLastName();
 			
