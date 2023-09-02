@@ -25,7 +25,7 @@ public class Series {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long seriesId;
 	
-	private String seriesName;
+	private String name;
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
@@ -43,13 +43,13 @@ public class Series {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "author_id", nullable = false)
+	@JoinColumn(name = "author_id")
 	private Author author;
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "illustrator_id", nullable = false)
+	@JoinColumn(name = "illustrator_id")
 	private Illustrator illustrator;
 	
 	@EqualsAndHashCode.Exclude

@@ -1,0 +1,30 @@
+{
+	"name": "Date A Live",
+	"categories": ["Shounen", "Anime", "Sci-fi", "Fantasy", "Comedy", "School Life", "Supernatural", "Action", "Ecchi", "Harem", "Romance", "Drama"]
+}
+
+{
+	"name": "Kings Proposal",
+	"categories": ["Fantasy", "Adventure", "School Life", "Action", "Magic", "Royalty"]
+}
+
+{
+	"name": "Is it Wrong to Pick Up Girls in a Dungeon?",
+	"categories": ["Fantasy", "Adventure", "Comedy", "Ecchi", "Harem", "Anime", "Romance", "Monster Girls", "Non-Human", "Elves", "Video Games/Game Adaptation/Game Elements", "Dungeon/Labyrinth", "Dragon"] 
+}
+
+{
+	"name": "TestSeries",
+	"volumnes": [
+	{
+		"volumeNumber": 1,
+		"pageCount": 100,
+		"description": "TestLightNovel"
+	},
+	{
+		"volumeNumber": 2,
+		"pageCount": 200,
+		"description": "TestLightNovel"
+	}
+	]
+}

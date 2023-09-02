@@ -8,18 +8,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryData {
 	private Long categoryId;
-	private String categoryName;
+	private String name;
 	
 	public CategoryData(Category category) {
 		this.categoryId = category.getCategoryId();
-		this.categoryName = category.getCategoryName();
+		this.name = category.getName();
+	}
+	
+	public CategoryData(String categoryName) {
+		this.name = categoryName;
 	}
 
 	public Category toCategory() {
 		Category category = new Category();
 		
 		category.setCategoryId(categoryId);
-		category.setCategoryName(categoryName);
+		category.setName(name);
 		
 		return category;
 	}

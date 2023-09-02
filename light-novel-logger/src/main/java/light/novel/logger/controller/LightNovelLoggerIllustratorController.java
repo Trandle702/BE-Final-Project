@@ -26,17 +26,21 @@ public class LightNovelLoggerIllustratorController {
 	@Autowired
 	private LightNovelLoggerIllustratorService illustratorService;
 
+	/*
+	 * CRUD operations for the Illustrator class - Create, Read, Update
+	 */
+	
 	/**
 	 * Create CRUD operation - creates a new Illustrator
 	 * 
 	 * @param illustratorData contains info to create new Illustrator
 	 * @return will return a new Illustrator
 	 */
-	@PostMapping("/illustrator")
+	@PostMapping("/user/{userId}/series/{seriesId}/illustrator")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public IllustratorData insertIllustrator(@RequestBody IllustratorData illustratorData) {
+	public IllustratorData insertIllustrator(@PathVariable Long userId, @PathVariable Long seriesId, @RequestBody IllustratorData illustratorData) {
 		log.info("Creating new illustrator={}", illustratorData);
-		return illustratorService.saveIllustrator(illustratorData);
+		return illustratorService.saveIllustrator(userId, seriesId, illustratorData);
 	}
 
 	/**
@@ -71,12 +75,12 @@ public class LightNovelLoggerIllustratorController {
 	 * @return will return NoSuchElementException if no Illustrator is found with the
 	 * 		provided illustratorId, otherwise will return the Illustrator with updated info
 	 */
-	@PutMapping("/illustrator/{illustratorId}")
-	public IllustratorData updateIllustrator(@PathVariable Long illustratorId,
+	@PutMapping("/user/{userId}/series/{seriesId}/illustrator/{illustratorId}")
+	public IllustratorData updateIllustrator(@PathVariable Long userId, @PathVariable Long seriesId, @PathVariable Long illustratorId,
 			@RequestBody IllustratorData illustratorData) {
 		illustratorData.setIllustratorId(illustratorId);
 		log.info("Updating illustrator with ID={}", illustratorId);
-		return illustratorService.saveIllustrator(illustratorData);
+		return illustratorService.saveIllustrator(userId, seriesId, illustratorData);
 	}
 	
 	/**
@@ -94,7 +98,7 @@ public class LightNovelLoggerIllustratorController {
 	 * 
 	 */
 	@DeleteMapping("/illustrator/{illustratorId}")
-	public void delteIllustratorById(@PathVariable Long illustratorId) {
+	public void deleteIllustratorById(@PathVariable Long illustratorId) {
 		log.info("attempting to delete illustrator with ID={}", illustratorId);
 		throw new UnsupportedOperationException("Deleting an illustrator is not allowed.");
 	}

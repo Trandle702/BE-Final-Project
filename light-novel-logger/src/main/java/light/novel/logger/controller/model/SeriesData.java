@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SeriesData {
 	private Long seriesId;
-	private String seriesName;
+	private String name;
 	private Set<LightNovelData> volumes = new HashSet<>();
 	private Set<CategoryData> categories = new HashSet<>();
 	
 	public SeriesData(Series series) {
 		this.seriesId = series.getSeriesId();
-		this.seriesName = series.getSeriesName();
+		this.name = series.getName();
 		
 		for(LightNovel volume : series.getVolumes()) {
 			this.volumes.add(new LightNovelData(volume));
@@ -34,7 +34,7 @@ public class SeriesData {
 		Series series = new Series();
 		
 		series.setSeriesId(seriesId);;
-		series.setSeriesName(seriesName);
+		series.setName(name);
 		
 		for(LightNovelData lightNovelData: volumes) {
 			series.getVolumes().add(lightNovelData.toLightNovel());

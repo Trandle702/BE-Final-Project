@@ -18,30 +18,30 @@ CREATE TABLE user (
 
 CREATE TABLE author (
 	author_id int NOT NULL AUTO_INCREMENT,
-	first_name varchar(60) NOT NULL,
+	first_name varchar(60),
 	last_name varchar(60),
 	PRIMARY KEY (author_id)
 );
 
 CREATE TABLE illustrator (
 	illustrator_id int NOT NULL AUTO_INCREMENT,
-	first_name varchar(60) NOT NULL,
+	first_name varchar(60),
 	last_name varchar(60),
 	PRIMARY KEY (illustrator_id)
 );
 
 CREATE TABLE category (
 	category_id int NOT NULL AUTO_INCREMENT,
-	category_name varchar(60),
+	name varchar(60),
 	PRIMARY KEY (category_id)
 );
 
 CREATE TABLE series (
 	series_id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
-	author_id int NOT NULL,
-	illustrator_id int NOT NULL,
-	series_name varchar(256) NOT NULL,
+	author_id int,
+	illustrator_id int,
+	name varchar(500) NOT NULL,
 	PRIMARY KEY (series_id),
 	FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE,
 	FOREIGN KEY (author_id) REFERENCES author (author_id) ON DELETE CASCADE,
@@ -53,9 +53,9 @@ CREATE TABLE light_novel (
 	series_id int NOT NULL,
 	volume_number int NOT NULL,
 	page_count int NOT NULL,
-	description varchar(256),
+	description varchar(2000),
 	PRIMARY KEY (light_novel_id),
-	FOREIGN KEY (series_id) REFERENCES series (series_id) ON DELETE CASCADE
+	FOREIGN KEY (series_id) REFERENCES series (series_id)ON DELETE CASCADE
 );
 
 CREATE TABLE series_category (

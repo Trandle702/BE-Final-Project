@@ -37,11 +37,11 @@ public class LightNovelLoggerAuthorController {
 	 * @param authorData contains info to create new Author
 	 * @return will return a new Author
 	 */
-	@PostMapping("/author")
+	@PostMapping("/user/{userId}/series/{seriesId}/author")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public AuthorData insertAuthor(@RequestBody AuthorData authorData) {
+	public AuthorData insertAuthor(@PathVariable Long userId, @PathVariable Long seriesId, @RequestBody AuthorData authorData) {
 		log.info("Creating new author {}", authorData);
-		return authorService.saveAuthor(authorData);
+		return authorService.saveAuthor(userId, seriesId, authorData);
 	}
 	
 	/**
@@ -76,11 +76,11 @@ public class LightNovelLoggerAuthorController {
 	 * @return will return NoSuchElementException if no Author is found with the
 	 * 		provided authorId, otherwise will return the Author with updated info
 	 */
-	@PutMapping("/author/{authorId}")
-	public AuthorData updateAuthor(@PathVariable Long authorId, @RequestBody AuthorData authorData) {
+	@PutMapping("user/{userId}/series/{seriesId}/author/{authorId}")
+	public AuthorData updateAuthor(@PathVariable Long userId, @PathVariable Long seriesId, @PathVariable Long authorId, @RequestBody AuthorData authorData) {
 		authorData.setAuthorId(authorId);
 		log.info("Updating author with ID={}", authorId);
-		return authorService.saveAuthor(authorData);
+		return authorService.saveAuthor(userId, seriesId, authorData);
 	}
 	
 	/**
@@ -99,7 +99,7 @@ public class LightNovelLoggerAuthorController {
 	 */
 	@DeleteMapping("/author/{authorId}")
 	public Map<String, String> deleteAuthorById(@PathVariable Long authorId) {
-		log.info("Attempting to delete an author by ID");
+		log.info("Attempting to delete author with ID={}", authorId);
 		throw new UnsupportedOperationException("Deleting an author by ID is not allowed");
 	}
 }

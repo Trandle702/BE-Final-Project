@@ -19,7 +19,7 @@ public class LightNovel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long lightNovelId;
 	
-	private int volumeNumber;
+	private Long volumeNumber;
 	private int pageCount;
 	private String description;
 	

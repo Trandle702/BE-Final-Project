@@ -108,7 +108,4 @@ public class LightNovelLoggerUserController {
 		userService.deleteUserById(userId);
 		return Map.of("message:", "Deletion of User with ID=" + userId + " was successful.");
 	}
-	
-
-	
 }

@@ -10,17 +10,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import light.novel.logger.controller.model.AuthorData;
 import light.novel.logger.dao.AuthorDao;
+import light.novel.logger.dao.SeriesDao;
+import light.novel.logger.dao.UserDao;
 import light.novel.logger.entity.Author;
+import light.novel.logger.entity.Series;
+import light.novel.logger.entity.User;
 
 @Service
 public class LightNovelLoggerAuthorService {
 	
 	@Autowired
 	private AuthorDao authorDao;
-
-	/*
-	 * CRUD operations for the Author class
-	 */
+	
+	@Autowired
+	private SeriesDao seriesDao;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	/**
 	 * Method will either create a new Author or update currently existing Author with
@@ -30,10 +36,53 @@ public class LightNovelLoggerAuthorService {
 	 * @return will return a new/updated Author
 	 */
 	@Transactional(readOnly = false)
-	public AuthorData saveAuthor(AuthorData authorData) {
+	public AuthorData saveAuthor(Long userId, Long seriesId, AuthorData authorData) {
+		User user = findUserById(userId);
+		Series series = findSeriesById(seriesId);
 		Author author = authorData.toAuthor();
-		Author dbAuthor = authorDao.save(author);
-		return new AuthorData(dbAuthor);
+		List<Author> authors = authorDao.findAll();
+		
+		for(Author daoAuthor : authors) {
+			if(daoAuthor.getFirstName().equals(author.getFirstName()) &&
+				daoAuthor.getLastName().equals(author.getLastName())) {
+				daoAuthor.getSeries().add(series);
+				series.setAuthor(daoAuthor);
+				user.getSeries().add(series);
+				return new AuthorData(authorDao.save(daoAuthor));
+			}
+		}
+		
+		author.getSeries().add(series);
+		series.setAuthor(author);
+		user.getSeries().add(series);
+		
+		return new AuthorData(authorDao.save(author));
+	}
+	
+	/**
+	 * Method will attempt to find a User in the database using the UserId passed in
+	 * the parameter
+	 * 
+	 * @param userId the ID of the User to find
+	 * @return will return NoSuchElementException if no User is found with the
+	 * 		provided userId, otherwise will return the User
+	 */
+	private User findUserById(Long userId) {
+		return userDao.findById(userId)
+				.orElseThrow(() -> new NoSuchElementException("user with ID=" + userId + " does not exists."));
+	}
+	
+	/**
+	 * Method will attempt to find a Series from the selected User using the seriesId passed
+	 * in the parameter
+	 * 
+	 * @param seriesId the ID of the Series to find
+	 * @return will return NoSuchElementException if no Series is found with the
+	 * 		provided seriesId, otherwise will return the Series
+	 */
+	private Series findSeriesById(Long seriesId) {
+		return seriesDao.findById(seriesId)
+				.orElseThrow(() -> new NoSuchElementException("series with ID=" + seriesId + " does not exists."));
 	}
 
 	/**
@@ -79,5 +128,4 @@ public class LightNovelLoggerAuthorService {
 				.orElseThrow(() -> new NoSuchElementException(
 						"Author with ID=" + authorId + " does not exists."));
 	}
-
 }

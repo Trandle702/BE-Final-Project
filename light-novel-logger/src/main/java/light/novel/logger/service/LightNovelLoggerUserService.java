@@ -21,10 +21,6 @@ public class LightNovelLoggerUserService {
 	@Autowired
 	private UserDao userDao;
 	
-	/*
-	 * CRUD operations for the User class
-	 */
-	
 	/**
 	 * Method will either create a new User or update currently existing User with
 	 * the userData passed in the parameter.
@@ -35,24 +31,41 @@ public class LightNovelLoggerUserService {
 	 */
 	@Transactional(readOnly = false)
 	public UserData saveUser(UserData userData) {
-		User user;
+		User user = findOrCreateUser(userData.getUserId(), userData.getEmail());
 		
-		if(Objects.isNull(userData.getUserId())) {
-			Optional<User> opUser = userDao.findByEmail(userData.getEmail());
-			
-			if(opUser.isPresent()) {
-				throw new DuplicateKeyException("User with email=" + userData.getEmail() + " already exists.");
-			}
-			
-			
-		}else {
-			user = findUserById(userData.getUserId());
-			
-		}
 		user = userData.toUser();
-		
-		
 		return new UserData(userDao.save(user));
+	}
+	
+	/**
+	 * Method will check to see if a User can be created
+	 * 
+	 * @param userId the ID of the User that we are attempting to create
+	 * @param userEmail the email of the User
+	 * @return will return a DuplicateKeyException if there already is User with
+	 * 			the same email passed in the parameter, otherwise will return a User
+	 */
+	private User findOrCreateUser(Long userId, String userEmail) {
+		User curUser;
+		Optional<User> opUser = userDao.findByEmail(userEmail);
+		
+		if(Objects.isNull(userId)) {
+			if(opUser.isPresent()) {
+				throw new DuplicateKeyException("User with email=" + userEmail + " already exists.");
+			}
+			curUser = new User();
+		}else {
+			List<User> currentUsers = userDao.findAll();
+			for(User user : currentUsers) {
+				if(user.getEmail().equals(userEmail) && 
+						(!user.getUserId().equals(userId))) {
+					throw new DuplicateKeyException("User with email=" + userEmail + " already exists.");
+				}
+			}
+			curUser = findUserById(userId);
+		}
+		
+		return curUser;
 	}
 
 	/**
